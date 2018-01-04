@@ -2,7 +2,7 @@
 
 ### option
 | 参数 | 说明 | 类型 | 默认值 |
-|---------------------|
+| ---- | ---- | ---- | ---- |
 | type | 配置类型 | string [chart, element] | element |
 | [coordinate](#coordinate) | 坐标系配置 | object | null |
 | [brush](#brush) | 缩略轴配置 | object | null |
@@ -10,7 +10,7 @@
 
 ### <span id="coordinate">coordinate</span>
 | 参数 | 说明 | 类型 | 默认值 |
-|---------------------|
+| ---- | ---- | ---- | ---- |
 | type | 坐标系类型 | string [rect, polar, ...] | rect |
 | show | 是否显示坐标轴 | boolean | false |
 | [x](#axis) | 坐标系x轴配置, type = rect 时有效 | object [axis] | null |
@@ -18,7 +18,7 @@
 
 #### <span id="axis">axis</span>
 | 参数 | 说明 | 类型 | 默认值 |
-|---------------------|
+| ---- | ---- | ---- | ---- |
 | type | 坐标轴类型 | string [category, value] | category |
 | show | 是否显示坐标轴,如果未设置,使用coordinate的配置 | boolean | undefined |
 | pickChildren | 使用子图表坐标轴进行绘制 | boolean | false |
