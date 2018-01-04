@@ -1,0 +1,21 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions"]
+      }
+    }],
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "lib": "./lib"
+      }
+    }],
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ]
+}
