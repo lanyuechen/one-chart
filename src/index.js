@@ -9,8 +9,9 @@ import Brush from './components/brush';
 import XAxis from './components/x-axis';
 import YAxis from './components/y-axis';
 
+import { AXIS_HEIGHT_BASIC } from './components/x-axis';
+
 const BRUSH_HEIGHT = 20;
-const XAXIS_HEIGHT = 20;
 const YAXIS_WIDTH = 20;
 
 class Chart extends Component {
@@ -96,7 +97,10 @@ class Chart extends Component {
 
     const showX = Chart.showX(option.coordinate);
     const showY = Chart.showY(option.coordinate);
-    const xAxisHeight = showX ? XAXIS_HEIGHT : 0;
+
+    const axis = Coordinate.getAxis(option.coordinate.x, option.children);
+
+    const xAxisHeight = showX ? (axis.length || 1) * AXIS_HEIGHT_BASIC : 0;
     const yAxisWidth = showY ? YAXIS_WIDTH : 0;
 
     const coord = new Coordinate({
