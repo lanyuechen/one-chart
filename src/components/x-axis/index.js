@@ -27,10 +27,12 @@ class XAxis extends Component {
   }
 
   updateAxis = () => {
-    const { scale } = this.props;
-    this.axis.scale(scale);
-    d3.select(this.refs.axis)
-      .call(this.axis);
+    const { scale, axis } = this.props;
+    if (!axis) {
+      this.axis.scale(scale);
+      d3.select(this.refs.axis)
+        .call(this.axis);
+    }
   };
 
   shouldComponentUpdate(nextProps) {
@@ -43,20 +45,34 @@ class XAxis extends Component {
   render() {
     const { axis, scale } = this.props;
 
-    console.log('*****', axis);
-
     if (axis) {
-      const paddingInner = scale.paddingInner();
       const step = scale.step();
+      const halfPaddingInner = scale.paddingInner() * step / 2;
+      const range = scale.range();
 
       return (
         <g className="one-axis">
           {axis.map((d, i) => (
-            <g key={i} transform={`translate(0, ${(axis.length - 1 - i) * AXIS_HEIGHT_BASIC + 16})`}>
+            <g key={i} transform={`translate(0, ${(axis.length - 1 - i) * AXIS_HEIGHT_BASIC})`}>
+
+              <line x1={0} y1={0.5} x2={range[1]} y2={0.5} />
+
+              {d.map((dd, j) => {
+                if (j === 0) {
+                  return null;
+                }
+
+                let x = scale(dd.start) - halfPaddingInner;
+
+                return (
+                  <line key={j} x1={x} y1={0} x2={x} y2={AXIS_HEIGHT_BASIC} />
+                )
+              })}
               {d.map((dd, j) => (
                 <text
                   key={j}
-                  x={scale(dd.start) + (step * dd.band - step * paddingInner) / 2}
+                  x={scale(dd.start) + step * dd.band / 2 - halfPaddingInner}
+                  y={14}
                 >
                   {dd.name}
                 </text>
