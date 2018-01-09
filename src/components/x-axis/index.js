@@ -43,7 +43,7 @@ class XAxis extends Component {
   }
 
   render() {
-    const { axis, scale } = this.props;
+    const { axis, scale, offset } = this.props;
 
     if (axis) {
       const step = scale.step();
@@ -51,7 +51,8 @@ class XAxis extends Component {
       const range = scale.range();
 
       return (
-        <g className="one-axis">
+        <g className="one-axis" transform={`translate(${offset[0]}, ${offset[1]})`}>
+
           <line x1={0.5} y1={0} x2={0.5} y2={AXIS_HEIGHT_BASIC * axis.length} />
           <line x1={range[1] - 0.5} y1={0} x2={range[1] - 0.5} y2={AXIS_HEIGHT_BASIC * axis.length} />
           <line x1={0.5} y1={AXIS_HEIGHT_BASIC * axis.length - 0.5} x2={range[1] - 0.5} y2={AXIS_HEIGHT_BASIC * axis.length - 0.5} />
@@ -87,7 +88,7 @@ class XAxis extends Component {
     }
 
     return (
-      <g ref="axis">
+      <g ref="axis" transform={`translate(${offset[0]}, ${offset[1]})`}>
 
       </g>
     )

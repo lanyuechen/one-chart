@@ -5,7 +5,7 @@ class Brush extends Component {
   constructor(props) {
     super(props);
 
-    const { width, height } = this.props;
+    const { width, height } = props;
 
     this.brush = d3.brushX()
       .on('brush end', this.brushed);
@@ -63,8 +63,10 @@ class Brush extends Component {
   };
 
   render() {
+    const { offset } = this.props;
+
     return (
-      <g ref="brush">
+      <g ref="brush" transform={`translate(${offset[0]}, ${offset[1]})`}>
 
       </g>
     )

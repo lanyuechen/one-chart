@@ -8,6 +8,7 @@ import Ele from './element';
 import Brush from './components/brush';
 import XAxis from './components/x-axis';
 import YAxis from './components/y-axis';
+import Container from './components/container';
 
 import { AXIS_HEIGHT_BASIC } from './components/x-axis';
 
@@ -27,14 +28,6 @@ class Chart extends Component {
       return option.show;
     }
     return show;
-  }
-
-  static showX(option) {
-    return Chart.show(option, 'x.show');
-  }
-
-  static showY(option) {
-    return Chart.show(option, 'y.show');
   }
 
   componentDidUpdate() {
@@ -68,35 +61,22 @@ class Chart extends Component {
     this.scale.domain(s.map(this.brushScale.invert, this.brushScale));
 
     this.forceUpdate();
-
-    //d3.select(this.refs.rect).call(
-    //  brush.zoom.transform,
-    //  d3.zoomIdentity
-    //    .scale(width / (s[1] - s[0]))
-    //    .translate(-s[0], 0)
-    //);
-  };
-
-  handleZoomed = (t) => {
-    //this.scale.domain(t.rescaleX(this.brushScale).domain());
-    //context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
   };
 
   render() {
     let { option, rect: { x, y, width, height } } = this.props;
 
-    let x2 = x, y2 = y, oldWidth = width;
-    if (option.brush) {
-      x2 = this.scale(0);
-      width = this.scale(width) - x2;
-      height = height - BRUSH_HEIGHT;
-    } else {
-      x2 = 0;
-      y2 = 0;
-    }
+    const showX = Chart.show(option.coordinate, 'x.show');
+    const showY = Chart.show(option.coordinate, 'y.show');
+    const showBrush = option.brush;
 
-    const showX = Chart.showX(option.coordinate);
-    const showY = Chart.showY(option.coordinate);
+    let brushedX = 0, brushedY = 0, brushedWidth = width;
+    if (showBrush) {
+      brushedX = this.scale(0);
+      brushedY = y;
+      brushedWidth = this.scale(width) - brushedX;
+      height = height - BRUSH_HEIGHT;
+    }
 
     const axis = Coordinate.getAxis(option.coordinate.x, option.children);
 
@@ -106,66 +86,54 @@ class Chart extends Component {
     const coord = new Coordinate({
       option: option.coordinate,
       children: option.children,
-      width:  Math.abs(width) - yAxisWidth,
+      width:  Math.abs(brushedWidth) - yAxisWidth,
       height: Math.abs(height) - xAxisHeight
     });
 
-    const clipId = 'c' + uuid();
+    const clipPathId = 'c' + uuid();
 
     return (
-      <g transform={`translate(${x}, ${y})`}>
-        <defs>
-          <clipPath id={clipId}>
-            <rect transform={`translate(${-x2}, ${-y2})`} width={oldWidth} height={height} />
-          </clipPath>
-        </defs>
-
-        <g transform={`translate(${x2 + yAxisWidth}, ${y2})`} clipPath={`url(#${clipId})`}>
+      <Container x={x} y={y} width={width} height={height} clipPathId={clipPathId} brushedX={brushedX} brushedY={brushedY}>
+        <g transform={`translate(${brushedX + yAxisWidth}, ${brushedY})`} clipPath={`url(#${clipPathId})`}>
           {option.children && option.children.map((d, i) => {
             const range = coord.yAxis.scale.range();
-            let rect = {
+            const rect = {
               x: coord.x(i),
               y: range[1],
               width: coord.bw(i),
               height: range[0] - range[1]
             };
 
-            if (d.type === 'chart') {
-              return (
-                <Chart key={i} option={d} rect={rect} />
-              );
-            }
-
-            rect = {...rect, y: coord.yAxis.scale(d), height: coord.yAxis.scale(0) - coord.yAxis.scale(d)};
-            return (
-              <Ele key={i} option={option} rect={rect} data={d} />
+            return d.type === 'chart' ? (
+              <Chart key={i} option={d} rect={rect} />
+            ) : (
+              <Ele
+                key={i}
+                option={option}
+                rect={rect}
+                graphic={{
+                  ...rect,
+                  y: coord.yAxis.scale(d),
+                  height: coord.yAxis.scale(0) - coord.yAxis.scale(d)
+                }}
+              />
             );
           })}
-          {showX && (
-            <g transform={`translate(0, ${height - xAxisHeight})`}>
-              <XAxis {...coord.xAxis} />
-            </g>
-          )}
+          {showX && <XAxis {...coord.xAxis} offset={[0, height - xAxisHeight]} />}
         </g>
 
-        {showY && (
-          <g transform={`translate(${YAXIS_WIDTH}, 0)`}>
-            <YAxis {...coord.yAxis} />
-          </g>
-        )}
+        {showY && <YAxis {...coord.yAxis} offset={[YAXIS_WIDTH, 0]} />}
 
-        {option.brush && (
-          <g transform={`translate(0, ${height})`}>
-            <Brush
-              ref="brush"
-              width={oldWidth}
-              height={BRUSH_HEIGHT}
-              onBrushed={this.handleBrushed}
-              onZoomed={this.handleZoomed}
-            />
-          </g>
+        {showBrush && (
+          <Brush
+            ref="brush"
+            width={width}
+            height={BRUSH_HEIGHT}
+            offset={[0, height]}
+            onBrushed={this.handleBrushed}
+          />
         )}
-      </g>
+      </Container>
     );
   }
 }

@@ -32,8 +32,9 @@ class YAxis extends Component {
   }
 
   render() {
+    const { offset } = this.props;
     return (
-      <g ref="axis">
+      <g ref="axis" transform={`translate(${offset[0]}, ${offset[1]})`}>
 
       </g>
     )
