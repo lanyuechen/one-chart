@@ -52,6 +52,9 @@ class XAxis extends Component {
 
       return (
         <g className="one-axis">
+          <line x1={0.5} y1={0} x2={0.5} y2={AXIS_HEIGHT_BASIC * axis.length} />
+          <line x1={range[1] - 0.5} y1={0} x2={range[1] - 0.5} y2={AXIS_HEIGHT_BASIC * axis.length} />
+          <line x1={0.5} y1={AXIS_HEIGHT_BASIC * axis.length - 0.5} x2={range[1] - 0.5} y2={AXIS_HEIGHT_BASIC * axis.length - 0.5} />
           {axis.map((d, i) => (
             <g key={i} transform={`translate(0, ${(axis.length - 1 - i) * AXIS_HEIGHT_BASIC})`}>
 
