@@ -93,7 +93,7 @@ class Chart extends Component {
     const clipPathId = 'c' + uuid();
 
     return (
-      <Container x={x} y={y} width={width} height={height} clipPathId={clipPathId} brushedX={brushedX} brushedY={brushedY}>
+      <Container {...{x, y, width, height, clipPathId, brushedX, brushedY}}>
         <g transform={`translate(${brushedX + yAxisWidth}, ${brushedY})`} clipPath={`url(#${clipPathId})`}>
           {option.children && option.children.map((d, i) => {
             const range = coord.yAxis.scale.range();

@@ -146,10 +146,6 @@ class Coordinate {
     const step = this.xAxis.scale.step();
     return step * r - step * paddingInner;
   }
-
-  bandWidth() {
-    return this.xAxis.scale.bandwidth();
-  }
 }
 
 export default Coordinate;
