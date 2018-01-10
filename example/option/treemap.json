@@ -1,0 +1,12 @@
+{
+  "type": "chart",
+  "coordinate": {
+    "type": "treemap"
+  },
+  "brush": {},
+  "children": [
+    10,
+    20,
+    30
+  ]
+}

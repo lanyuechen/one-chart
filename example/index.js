@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Chart from '../src';
 
-import barOption from './option/bar.json';
+import option from './option';
 
 class Demo extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class Demo extends Component {
 
   render() {
     return (
-      <Chart option={barOption} rect={{x: 0, y: 0, width: 600, height: 400}} />
+      <Chart option={option.treemap} rect={{x: 0, y: 0, width: 600, height: 400}} />
     );
   }
 }

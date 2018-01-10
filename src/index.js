@@ -3,12 +3,14 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 
 import { uuid } from './lib/common';
-import Coordinate from './coordinate';
 import Ele from './element';
 import Brush from './components/brush';
 import XAxis from './components/x-axis';
 import YAxis from './components/y-axis';
 import Container from './components/container';
+
+import Coordinate from './coordinate/rect';
+import CoordinateTreemap from './coordinate/treemap';
 
 import { AXIS_HEIGHT_BASIC } from './components/x-axis';
 
@@ -63,6 +65,26 @@ class Chart extends Component {
     this.forceUpdate();
   };
 
+  createCoordinate = (width, height) => {
+    const { option: { coordinate, children } } = this.props;
+    if (coordinate.type === 'rect') {
+      return new Coordinate({
+        option: coordinate,
+        children: children,
+        width,
+        height
+      });
+    }
+
+    return new CoordinateTreemap({
+      option: coordinate,
+      children: children,
+      width,
+      height
+    })
+
+  };
+
   render() {
     let { option, rect: { x, y, width, height } } = this.props;
 
@@ -78,17 +100,10 @@ class Chart extends Component {
       height = height - BRUSH_HEIGHT;
     }
 
-    const axis = Coordinate.getAxis(option.coordinate.x, option.children);
-
-    const xAxisHeight = showX ? (axis.length || 1) * AXIS_HEIGHT_BASIC : 0;
+    const xAxisHeight = showX ? Coordinate.axisHeight(option) : 0;
     const yAxisWidth = showY ? YAXIS_WIDTH : 0;
 
-    const coord = new Coordinate({
-      option: option.coordinate,
-      children: option.children,
-      width:  Math.abs(brushedWidth) - yAxisWidth,
-      height: Math.abs(height) - xAxisHeight
-    });
+    const coord = this.createCoordinate(Math.abs(brushedWidth) - yAxisWidth, Math.abs(height) - xAxisHeight);
 
     const clipPathId = 'c' + uuid();
 
@@ -96,13 +111,8 @@ class Chart extends Component {
       <Container {...{x, y, width, height, clipPathId, brushedX, brushedY}}>
         <g transform={`translate(${brushedX + yAxisWidth}, ${brushedY})`} clipPath={`url(#${clipPathId})`}>
           {option.children && option.children.map((d, i) => {
-            const range = coord.yAxis.scale.range();
-            const rect = {
-              x: coord.x(i),
-              y: range[1],
-              width: coord.bw(i),
-              height: range[0] - range[1]
-            };
+
+            const rect = coord.rect(i);
 
             return d.type === 'chart' ? (
               <Chart key={i} option={d} rect={rect} />
@@ -111,11 +121,7 @@ class Chart extends Component {
                 key={i}
                 option={option}
                 rect={rect}
-                graphic={{
-                  ...rect,
-                  y: coord.yAxis.scale(d),
-                  height: coord.yAxis.scale(0) - coord.yAxis.scale(d)
-                }}
+                graphic={coord.graphic(rect, d)}
               />
             );
           })}
