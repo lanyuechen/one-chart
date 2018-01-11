@@ -7,7 +7,7 @@
 export function uuid(sep = '', len = 24) {
   const s = [];
   const hexDigits = '0123456789abcdef';
-  for (let i = 0; i < 36; i++) {
+  for (let i = 0; i < 40; i++) {  //最大长度36,预留4位分隔符,否则分隔符为空时实际获取到的id位数会少
     s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
   }
   s[14] = '4';  // bits 12-15 of the time_hi_and_version field to 0010
