@@ -40,7 +40,11 @@ class TreemapCoordinate extends CI {
   }
 
   graphic(rect, d) {
-    return rect;
+    return {
+      ...rect,
+      x: 0,
+      y: 0
+    };
   }
 }
 

@@ -36,6 +36,7 @@ class RectCoordinate extends CI {
   graphic(rect, d) {
     return {
       ...rect,
+      x: 0,
       y: this.yAxis.scale(d),
       height: this.yAxis.scale(0) - this.yAxis.scale(d)
     }
