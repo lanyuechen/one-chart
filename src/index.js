@@ -9,10 +9,7 @@ import XAxis from './components/x-axis';
 import YAxis from './components/y-axis';
 import Container from './components/container';
 
-import Coordinate from './coordinate/rect';
-import CoordinateTreemap from './coordinate/treemap';
-
-import { AXIS_HEIGHT_BASIC } from './components/x-axis';
+import COORD from './coordinate';
 
 const BRUSH_HEIGHT = 20;
 const YAXIS_WIDTH = 20;
@@ -65,26 +62,6 @@ class Chart extends Component {
     this.forceUpdate();
   };
 
-  createCoordinate = (width, height) => {
-    const { option: { coordinate, children } } = this.props;
-    if (coordinate.type === 'rect') {
-      return new Coordinate({
-        option: coordinate,
-        children: children,
-        width,
-        height
-      });
-    }
-
-    return new CoordinateTreemap({
-      option: coordinate,
-      children: children,
-      width,
-      height
-    })
-
-  };
-
   render() {
     let { option, rect: { x, y, width, height } } = this.props;
 
@@ -100,10 +77,17 @@ class Chart extends Component {
       height = height - BRUSH_HEIGHT;
     }
 
-    const xAxisHeight = showX ? Coordinate.axisHeight(option) : 0;
+    const Coord = COORD[option.coordinate.type];
+
+    const xAxisHeight = showX ? Coord.axisHeight(option) : 0;
     const yAxisWidth = showY ? YAXIS_WIDTH : 0;
 
-    const coord = this.createCoordinate(Math.abs(brushedWidth) - yAxisWidth, Math.abs(height) - xAxisHeight);
+    const coord = new Coord({
+      option: option.coordinate,
+      children: option.children,
+      width: Math.abs(brushedWidth) - yAxisWidth,
+      height: Math.abs(height) - xAxisHeight
+    });
 
     const clipPathId = 'c' + uuid();
 

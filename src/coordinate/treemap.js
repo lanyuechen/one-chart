@@ -1,14 +1,13 @@
 import * as d3 from 'd3';
 import _ from 'lodash';
 
-class Coordinate {
-  constructor({ option, children, width, height }) {
-    this.width = width;
-    this.height = height;
-    this.option = option;
-    this.children = children;
+import CI from './interface';
 
-    const data = children.map(d => {
+class TreemapCoordinate extends CI {
+  constructor(props) {
+    super(props);
+
+    const data = this.children.map(d => {
       if (!d) {
         return 0;
       }
@@ -20,17 +19,12 @@ class Coordinate {
 
     const root = d3.hierarchy({ children: data });
     const treemap = d3.treemap()
-      .size([width, height])
+      .size([this.width, this.height])
       .padding(1);
 
     this.nodes = treemap(
       root.sum(function(d) { return d; })
-        .sort(function(a, b) { return b.height - a.height || b.value - a.value;})
     ).descendants().filter(d => !d.children);
-  }
-
-  static axisHeight(option) {
-    return 0;
   }
 
   rect(idx) {
@@ -50,4 +44,4 @@ class Coordinate {
   }
 }
 
-export default Coordinate;
+export default TreemapCoordinate;

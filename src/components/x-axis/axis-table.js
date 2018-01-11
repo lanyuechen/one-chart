@@ -32,8 +32,8 @@ class XAxis extends Component {
             {d.map((dd, j) => {
               const x = scale(dd.start) - halfPaddingInner;
               return [
-                (j > 0 && <line key={j} x1={x} y1={0} x2={x} y2={AXIS_HEIGHT_BASIC} />),
-                <text key={j} x={x + step * dd.band / 2} y={14}>
+                (j > 0 && <line key={`l${j}`} x1={x} y1={0} x2={x} y2={AXIS_HEIGHT_BASIC} />),
+                <text key={`t${j}`} x={x + step * dd.band / 2} y={14}>
                   {dd.name}
                 </text>
               ];
