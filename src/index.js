@@ -7,6 +7,7 @@ import Ele from './element';
 import Brush from './components/brush';
 import XAxis from './components/x-axis';
 import YAxis from './components/y-axis';
+import Calendar from './components/calendar';
 import Container from './components/container';
 
 import COORD from './coordinate';

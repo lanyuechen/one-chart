@@ -16,8 +16,84 @@ class RectCoordinate extends CI {
     this.yAxis = this.scale(y, [this.height, 0]);
   }
 
+  static getTicks(d, children) {
+    let domain = d.data;
+    if (d.pickChildren && Array.isArray(children)) {
+      domain = children.reduce((p, n, i) => {
+        if (n.type === 'chart') {
+          if (_.get(n, 'coordinate.x.pickChildren')) {
+            p.push(...RectCoordinate.getTicks(n.coordinate.x, n.children));
+          } else {
+            p.push(..._.get(n, 'coordinate.x.data', []))
+          }
+        } else {
+          p.push(d.data[i]);
+        }
+        return p;
+      }, []);
+    }
+    return domain;
+  }
+
+  static deepLength(data) {
+    return data.reduce((p, n) => {
+      if (typeof(n) === 'string') {
+        return p + 1;
+      } else {
+        return p + RectCoordinate.deepLength(n.children);
+      }
+    }, 0);
+  }
+
+  static toAxisMap(d, children) {
+    const m = [];
+    if (d.pickChildren && Array.isArray(children)) {
+      d.data.map((k, i) => {
+        const c = children[i];
+        if (c && c.type === 'chart') {
+          m.push({
+            name: k,
+            children: RectCoordinate.toAxisMap(c.coordinate.x, c.children)
+          });
+        } else {
+          m.push(k);
+        }
+      })
+    } else {
+      return d.data;
+    }
+    return m;
+  }
+
+  static toAxisData(data, arr, depth = 0, start = 0) {
+    arr[depth] = arr[depth] || [];
+
+    data.map(d => {
+      const isString = typeof(d) === 'string';
+
+      const name = isString ? d : d.name;
+      const band = isString ? 1 : RectCoordinate.deepLength(d.children);
+      arr[depth].push({ name, band, start });
+
+      if (!isString) {
+        RectCoordinate.toAxisData(d.children, arr, depth + 1, start);
+      }
+      start = start + band;
+    });
+  }
+
+  static getAxis(d, children) {
+    let axis = [];
+
+    const dMap = RectCoordinate.toAxisMap(d, children);
+
+    RectCoordinate.toAxisData(dMap, axis);
+
+    return axis;
+  }
+
   static axisHeight(option) {
-    const axis = CI.getAxis(option.coordinate.x, option.children);
+    const axis = RectCoordinate.getAxis(option.coordinate.x, option.children);
     return (axis.length || 1) * AXIS_HEIGHT_BASIC;
   }
 
@@ -51,8 +127,8 @@ class RectCoordinate extends CI {
   }
 
   scaleBand(d, range) {
-    const ticks = CI.getTicks(d, this.children);
-    const axis = CI.getAxis(d, this.children);
+    const ticks = RectCoordinate.getTicks(d, this.children);
+    const axis = RectCoordinate.getAxis(d, this.children);
     const scale = d3.scaleBand()
       .domain(ticks.map((dd, i) => i))
       .range(range)
@@ -71,7 +147,7 @@ class RectCoordinate extends CI {
   }
 
   idxToRoot(idx) {
-    return CI.getTicks(this.option.x, this.children.slice(0, idx)).length
+    return RectCoordinate.getTicks(this.option.x, this.children.slice(0, idx)).length
   }
 
   x(idx) {
@@ -87,7 +163,7 @@ class RectCoordinate extends CI {
     let r = 1;
     let { pickChildren, paddingInner } = this.option.x;
     if (pickChildren) {
-      const d = CI.getTicks(this.option.x, this.children.slice(idx, idx + 1));
+      const d = RectCoordinate.getTicks(this.option.x, this.children.slice(idx, idx + 1));
       r = d.length;
     }
 

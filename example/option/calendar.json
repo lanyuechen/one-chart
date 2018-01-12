@@ -1,0 +1,10 @@
+{
+  "type": "chart",
+  "coordinate": {
+    "type": "calendar",
+    "date": "2018-01"
+  },
+  "children": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9
+  ]
+}
