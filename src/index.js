@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
-import _ from 'lodash';
 
 import { uuid } from './lib/common';
 import Ele from './element';
 import Brush from './components/brush';
-import Calendar from './components/calendar';
 import Container from './components/container';
 
 import LAYOUT from './layout';

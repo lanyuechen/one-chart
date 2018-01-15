@@ -11,12 +11,14 @@
 ### <span id="coordinate">coordinate</span>
 | 参数 | 说明 | 类型 | 默认值 |
 | ---- | ---- | ---- | ---- |
-| type | 坐标系类型 | string [rect, polar, ...] | rect |
+| type | 坐标系类型 | string [[rect](#coord-rect), [treemap](#coord-treemap), [calendar](coord-calendar)] | rect |
 | show | 是否显示坐标轴 | boolean | false |
 | [x](#axis) | 坐标系x轴配置, type = rect 时有效 | object [axis] | null |
 | [y](#axis) | 坐标系y轴配置, type = rect 时有效 | object [axis] | null |
 
-#### <span id="axis">axis</span>
+#### <span id="coord-rect">直角坐标系(rect)</span>
+
+##### <span id="axis">axis</span>
 | 参数 | 说明 | 类型 | 默认值 |
 | ---- | ---- | ---- | ---- |
 | type | 坐标轴类型 | string [category, value] | category |
@@ -29,6 +31,10 @@
 | min | 坐标轴最小值, type = value 时有效 | number | 自动计算得出 |
 
 ![图1](./doc/band.png)
+
+#### <span id="coord-treemap">矩形树图坐标系(treemap)</span>
+
+#### <span id="coord-calendar">日历坐标系(calendar)</span>
 
 ### <span id="brush">brush</span>
 

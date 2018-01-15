@@ -7,15 +7,7 @@ class TreemapCoordinate extends CI {
   constructor(props) {
     super(props);
 
-    const data = this.children.map(d => {
-      if (!d) {
-        return 0;
-      }
-      if (typeof(d) === 'number') {
-        return d;
-      }
-      return d.value || 0;
-    });
+    const data = props.option.data;
 
     const root = d3.hierarchy({ children: data });
     const treemap = d3.treemap()

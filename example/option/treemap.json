@@ -1,7 +1,8 @@
 {
   "type": "chart",
   "coordinate": {
-    "type": "treemap"
+    "type": "treemap",
+    "data": [10, 20, 50]
   },
   "brush": {},
   "children": [
@@ -9,7 +10,6 @@
     20,
     {
       "type": "chart",
-      "value": 50,
       "coordinate": {
         "type": "rect",
         "show": true,
