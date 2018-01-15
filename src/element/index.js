@@ -12,18 +12,18 @@ class Ele extends Component {
   }
 
   getEle = () => {
-    const { graphic, option } = this.props;
-
-    return ELEMENT['rect'];
+    const { graphic } = this.props;
+    return ELEMENT[graphic.type];
   };
 
   render() {
-    const { x, y } = this.props.rect;
+    const { rect, graphic } = this.props;
+    const { x, y } = rect;
     const E = this.getEle();
 
     return (
       <g transform={`translate(${x}, ${y})`}>
-        <E {...this.props} />
+        <E {...graphic.feature} />
       </g>
     )
   }

@@ -6,7 +6,7 @@ class Rect extends Component {
   }
 
   render() {
-    let { x, y, width, height } = this.props.graphic;
+    let { x, y, width, height } = this.props;
 
     return (
       <rect x={x} y={y} width={width} height={height} />
