@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import AxisFromD3 from './axis-from-d3';
+import AxisD3 from './axis-d3';
 import AxisTable from './axis-table';
 
-class XAxis extends Component {
+export default class AxisBand extends Component {
   constructor(props) {
     super(props);
   }
@@ -14,9 +14,7 @@ class XAxis extends Component {
     return axis ? (
       <AxisTable {...this.props} />
     ) : (
-      <AxisFromD3 {...this.props} />
+      <AxisD3 {...this.props} />
     );
   }
 }
-
-export default XAxis;

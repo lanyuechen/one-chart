@@ -15,16 +15,13 @@ class CoordinateInterface {
     }
   }
 
-  static axisHeight(option) {
-    return 0;
-  }
-
   /**
    * 获取绘图区域
    * @param idx 区块索引
+   * @param d 数值
    * @returns {{x: 0, y: 0, width: 200, height: 100}}
    */
-  rect(idx) {}
+  rect(idx, d) {}
 
   /**
    * 绘图参数

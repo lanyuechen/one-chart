@@ -4,7 +4,7 @@ import { AXIS_HEIGHT_BASIC } from '../../../constant';
 
 import './styles.scss';
 
-class XAxis extends Component {
+export default class AxisTable extends Component {
   constructor(props) {
     super(props);
   }
@@ -44,5 +44,3 @@ class XAxis extends Component {
     )
   }
 }
-
-export default XAxis;

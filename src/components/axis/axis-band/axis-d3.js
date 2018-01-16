@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
-class XAxis extends Component {
+export default class AxisD3 extends Component {
   constructor(props) {
     super(props);
   }
@@ -42,5 +42,3 @@ class XAxis extends Component {
     )
   }
 }
-
-export default XAxis;
