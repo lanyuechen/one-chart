@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import Ele from '../element';
-import XAxis from '../components/x-axis';
-import YAxis from '../components/y-axis';
+import Axis from '../components/axis';
 import Chart from '../index';
 
 import Coordinate from '../coordinate/rect';
@@ -43,7 +42,7 @@ class RectLayout extends Component {
         <g transform={`translate(${x + yAxisWidth}, ${y})`} clipPath={`url(#${clipPathId})`}>
           {option.children && option.children.map((d, i) => {
 
-            const rect = coord.rect(i);
+            const rect = coord.rect(i, d);
 
             return d.type === 'chart' ? (
               <Chart key={i} option={d} rect={rect} />
@@ -56,10 +55,10 @@ class RectLayout extends Component {
               />
             );
           })}
-          {showX && <XAxis {...coord.xAxis} offset={[0, height - xAxisHeight]} />}
+          {showX && <Axis {...coord.xAxis} position="bottom" offset={[0, height - xAxisHeight]} />}
         </g>
 
-        {showY && <YAxis {...coord.yAxis} offset={[YAXIS_WIDTH, 0]} />}
+        {showY && <Axis {...coord.yAxis} position="left" offset={[YAXIS_WIDTH, 0]} />}
       </g>
     );
   }

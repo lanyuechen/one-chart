@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 
 import CI from './interface';
-import { AXIS_HEIGHT_BASIC } from '../components/x-axis';
+import { AXIS_HEIGHT_BASIC } from '../components/axis/axis-band';
 
 const PADDING_INNER = 0.2;
 const PADDING_OUTER = 0.2;
@@ -93,23 +93,37 @@ class RectCoordinate extends CI {
   }
 
   static axisHeight(option) {
-    const axis = RectCoordinate.getAxis(option.coordinate.x, option.children);
-    return (axis.length || 1) * AXIS_HEIGHT_BASIC;
+    const x = _.get(option, 'coordinate.x', {});
+    if (x.type === 'category') {
+      const axis = RectCoordinate.getAxis(x, option.children);
+      return (axis.length || 1) * AXIS_HEIGHT_BASIC;
+    }
+    return AXIS_HEIGHT_BASIC;
   }
 
-  rect(idx) {
+  rect(idx, d) {
+    let x = CI.valueOf(d, 0, idx);
+    let width = 20;
+
+    if (this.xAxis.type === 'category') {
+      if (this.option.x.pickChildren) {
+        x = this.idxToRoot(idx);
+      }
+      width = this.bw(idx);
+    }
 
     const range = this.yAxis.scale.range();
 
     return {
-      x: this.x(idx),
+      x: this.xAxis.scale(x),
       y: range[1],
-      width: this.bw(idx),
+      width,
       height: range[0] - range[1]
     }
   }
 
   graphic(rect, d) {
+    d = CI.valueOf(d, 1);
     return {
       type: 'rect',
       feature: {
@@ -138,7 +152,7 @@ class RectCoordinate extends CI {
       .paddingInner(typeof(d.paddingInner) === 'number' ? d.paddingInner : PADDING_INNER)
       .paddingOuter(typeof(d.paddingOuter) === 'number' ? d.paddingOuter : PADDING_OUTER);
 
-    return { scale, ticks, axis };
+    return { scale, ticks, axis, type: 'category' };
   }
 
   scaleLinear(d, range) {
@@ -146,20 +160,11 @@ class RectCoordinate extends CI {
       .domain([d.min, d.max])
       .range(range);
 
-    return { scale };
+    return { scale, type: 'value' };
   }
 
   idxToRoot(idx) {
     return RectCoordinate.getTicks(this.option.x, this.children.slice(0, idx)).length
-  }
-
-  x(idx) {
-    let r = idx;
-    if (this.option.x.pickChildren) {
-      r = this.idxToRoot(idx);
-    }
-
-    return this.xAxis.scale(r);
   }
 
   bw(idx) {

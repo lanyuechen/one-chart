@@ -11,7 +11,7 @@ class Demo extends Component {
 
   render() {
     return (
-      <Chart option={option.treemap} rect={{x: 0, y: 0, width: 600, height: 400}} />
+      <Chart option={option.bar2} rect={{x: 0, y: 0, width: 600, height: 400}} />
     );
   }
 }

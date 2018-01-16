@@ -1,0 +1,23 @@
+{
+  "type": "chart",
+  "coordinate": {
+    "type": "rect",
+    "show": true,
+    "x": {
+      "type": "value",
+      "max": 100,
+      "min": 0
+    },
+    "y": {
+      "type": "value",
+      "max": 100,
+      "min": 0
+    }
+  },
+  "brush": {},
+  "children": [
+    [10, 10],
+    [20, 20],
+    [50, 50]
+  ]
+}

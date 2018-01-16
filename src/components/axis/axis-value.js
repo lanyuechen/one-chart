@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
-class YAxis extends Component {
+export default class AxisValue extends Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    const { scale } = this.props;
-    this.axis = d3.axisLeft(scale);
+    const { scale, position } = this.props;
+    this.axis = {
+      left: d3.axisLeft,
+      bottom: d3.axisBottom
+    }[position](scale);
     d3.select(this.refs.axis)
       .call(this.axis);
   }
 
   componentDidUpdate() {
     this.updateAxis();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.scale !== this.props.scale) {
+      return true;
+    }
+    return false;
   }
 
   updateAxis = () => {
@@ -24,21 +34,10 @@ class YAxis extends Component {
       .call(this.axis);
   };
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.scale !== this.props.scale) {
-      return true;
-    }
-    return false;
-  }
-
   render() {
     const { offset } = this.props;
     return (
-      <g ref="axis" transform={`translate(${offset[0]}, ${offset[1]})`}>
-
-      </g>
+      <g ref="axis" transform={`translate(${offset[0]}, ${offset[1]})`} />
     )
   }
 }
-
-export default YAxis;

@@ -6,6 +6,15 @@ class CoordinateInterface {
     this.children = children;
   }
 
+  static valueOf(v, n = 0, idx) {
+    if (typeof(v) === 'number') {
+      v = [idx, v];
+    }
+    if (Array.isArray(v)) {
+      return v[n];
+    }
+  }
+
   static axisHeight(option) {
     return 0;
   }
