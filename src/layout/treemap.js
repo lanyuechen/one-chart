@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Ele from '../element';
 import Chart from '../index';
-
 import Coordinate from '../coordinate/treemap';
 
 class TreemapLayout extends Component {
@@ -29,12 +28,7 @@ class TreemapLayout extends Component {
           return d.type === 'chart' ? (
             <Chart key={i} option={d} rect={rect} />
           ) : (
-            <Ele
-              key={i}
-              option={option}
-              rect={rect}
-              graphic={coord.graphic(rect, d)}
-            />
+            <Ele key={i} rect={rect} graphic={coord.graphic(rect, d)} />
           );
         })}
       </g>

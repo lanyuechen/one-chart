@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { AXIS_HEIGHT_BASIC } from './index';
+import { AXIS_HEIGHT_BASIC } from '../../../constant';
 
 import './styles.scss';
 

@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import AxisFromD3 from './axis-from-d3';
 import AxisTable from './axis-table';
 
-export const AXIS_HEIGHT_BASIC = 20;
-
 class XAxis extends Component {
   constructor(props) {
     super(props);

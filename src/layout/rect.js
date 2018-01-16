@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import Ele from '../element';
 import Axis from '../components/axis';
 import Chart from '../index';
-
 import Coordinate from '../coordinate/rect';
 
-const YAXIS_WIDTH = 20;
+import { YAXIS_WIDTH } from '../constant';
 
 class RectLayout extends Component {
   constructor(props) {
@@ -47,12 +46,7 @@ class RectLayout extends Component {
             return d.type === 'chart' ? (
               <Chart key={i} option={d} rect={rect} />
             ) : (
-              <Ele
-                key={i}
-                option={option}
-                rect={rect}
-                graphic={coord.graphic(rect, d)}
-              />
+              <Ele key={i} rect={rect} graphic={coord.graphic(rect, d)} />
             );
           })}
           {showX && <Axis {...coord.xAxis} position="bottom" offset={[0, height - xAxisHeight]} />}

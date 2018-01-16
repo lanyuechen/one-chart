@@ -7,8 +7,7 @@ import Brush from './components/brush';
 import Container from './components/container';
 
 import LAYOUT from './layout';
-
-const BRUSH_HEIGHT = 20;
+import { BRUSH_HEIGHT } from './constant';
 
 class Chart extends Component {
   constructor(props) {

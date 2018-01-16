@@ -2,10 +2,7 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 
 import CI from './interface';
-import { AXIS_HEIGHT_BASIC } from '../components/axis/axis-band';
-
-const PADDING_INNER = 0.2;
-const PADDING_OUTER = 0.2;
+import { AXIS_HEIGHT_BASIC, PADDING_INNER, PADDING_OUTER } from '../constant';
 
 class RectCoordinate extends CI {
   constructor(props) {
