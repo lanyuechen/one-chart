@@ -1,4 +1,11 @@
+.one-calendar-head {
+  text-anchor: middle;
+}
+
 .one-calendar-body {
+  rect {
+    fill: #aaa;
+  }
   text {
     text-anchor: middle;
   }

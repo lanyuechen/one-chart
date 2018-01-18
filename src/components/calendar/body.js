@@ -14,11 +14,11 @@ export default class CalendarBody extends Component {
     return (
       <g className="one-calendar-body">
         {range.map((d, i) => {
-          const rect = coord.rect(i);
+          const { x, y, width, height } = coord.rect(i);
           return (
-            <g key={i} transform={`translate(${rect.x}, ${rect.y})`}>
-              <rect x={0} y={0} width={rect.width} height={rect.height} fill="#aaa" />
-              <text x={rect.width / 2} y={rect.height / 2}>{d}</text>
+            <g key={i} transform={`translate(${x}, ${y})`}>
+              <rect x={0} y={0} width={width} height={height} />
+              <text x={width / 2} y={height / 2}>{d}</text>
             </g>
           );
         })}
