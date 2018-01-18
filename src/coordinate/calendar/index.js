@@ -10,8 +10,9 @@ class CalendarCoordinate extends CI {
     const end = new Date(dateArr[0], dateArr[1], 0);
 
     this.startIdx = start.getDay();
+    this.dateLength = end.getDate();
     this.gridWidth = this.width / 7;
-    this.gridHeight = this.height / Math.ceil((end.getDate() + this.startIdx) / 7);
+    this.gridHeight = this.height / Math.ceil((this.dateLength + this.startIdx) / 7);
   }
 
   rect(idx) {

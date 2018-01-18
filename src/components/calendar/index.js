@@ -1,17 +1,6 @@
-import React, { Component } from 'react';
+import Head from './head';
+import Body from './body';
 
-class Calendar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <g>
-
-      </g>
-    )
-  }
+export default {
+  Head, Body
 }
-
-export default Calendar;
