@@ -13,6 +13,7 @@ class CoordinateInterface {
     if (Array.isArray(v)) {
       return v[n];
     }
+    return idx;
   }
 
   /**

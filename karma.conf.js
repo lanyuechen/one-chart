@@ -14,6 +14,13 @@ module.exports = function(config) {
       module: {
         rules: [
           {
+            test: /\.js$/,
+            use: {
+              loader: 'babel-loader'
+            },
+            exclude: /node_modules/
+          },
+          {
             test: /\.css$/,
             use: [
               'style-loader',

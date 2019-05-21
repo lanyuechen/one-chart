@@ -1,0 +1,136 @@
+{
+  "type": "chart",
+  "coordinate": {
+    "type": "treemap",
+    "data": [10, 20, 50]
+  },
+  "brush": {},
+  "children": [
+    10,
+    {
+      "type": "chart",
+      "coordinate": {
+        "type": "rect",
+        "show": true,
+        "x": {
+          "type": "category",
+          "pickChildren": true,
+          "paddingInner": 0.2,
+          "paddingOuter": 0,
+          "data": ["海淀区", "昌平区", "朝阳区"]
+        },
+        "y": {
+          "type": "value",
+          "max": 100,
+          "min": 0
+        }
+      },
+      "children": [
+        10, 50, 70
+      ]
+    },
+    {
+      "type": "chart",
+      "coordinate": {
+        "type": "rect",
+        "show": true,
+        "x": {
+          "type": "category",
+          "pickChildren": true,
+          "paddingInner": 0.2,
+          "paddingOuter": 0.2,
+          "padding": 0,
+          "data": ["北京", "河北", "陕西"]
+        },
+        "y": {
+          "type": "value",
+          "max": 100,
+          "min": 0
+        }
+      },
+      "brush": {},
+      "children": [
+        {
+          "type": "chart",
+          "coordinate": {
+            "type": "rect",
+            "x": {
+              "type": "category",
+              "pickChildren": true,
+              "paddingInner": 0.2,
+              "paddingOuter": 0,
+              "data": ["海淀区", "昌平区", "朝阳区"]
+            },
+            "y": {
+              "type": "value",
+              "max": 100,
+              "min": 0
+            }
+          },
+          "children": [
+            10, 50, {
+              "type": "chart",
+              "coordinate": {
+                "type": "rect",
+                "x": {
+                  "type": "category",
+                  "paddingInner": 0.2,
+                  "paddingOuter": 0,
+                  "data": ["东区", "西区", "北区"]
+                },
+                "y": {
+                  "type": "value",
+                  "max": 100,
+                  "min": 0
+                }
+              },
+              "children": [
+                10, 50, 70
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "coordinate": {
+            "type": "rect",
+            "x": {
+              "type": "category",
+              "paddingInner": 0.2,
+              "paddingOuter": 0,
+              "data": ["石家庄", "保定"]
+            },
+            "y": {
+              "type": "value",
+              "max": 100,
+              "min": 0
+            }
+          },
+          "children": [
+            20, 60
+          ]
+        },
+        {
+          "type": "chart",
+          "coordinate": {
+            "type": "rect",
+            "x": {
+              "type": "category",
+              "paddingInner": 0.2,
+              "paddingOuter": 0,
+              "data": ["郑州", "安阳"]
+            },
+            "y": {
+              "type": "value",
+              "max": 100,
+              "min": 0
+            }
+          },
+          "children": [
+            30, 70
+          ]
+        }
+      ]
+    }
+  ]
+}

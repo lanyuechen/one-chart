@@ -16,10 +16,3 @@ export function uuid(sep = '', len = 24) {
 
   return s.join('').substr(0, len);	//分隔符: "-"
 }
-
-export function valueOf(value, option) {
-  if (typeof(value) === 'number') {
-    return value;
-  }
-
-}

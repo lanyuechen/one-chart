@@ -4,9 +4,8 @@
     "type": "rect",
     "show": true,
     "x": {
-      "type": "value",
-      "max": 100,
-      "min": 0
+      "type": "category",
+      "data": ["北京", "河北", "陕西"]
     },
     "y": {
       "type": "value",
@@ -14,10 +13,66 @@
       "min": 0
     }
   },
-  "brush": {},
   "children": [
-    [10, 10],
-    [20, 20],
-    [50, 50]
+    {
+      "type": "chart",
+      "coordinate": {
+        "type": "rect",
+        "x": {
+          "type": "category",
+          "paddingInner": 0.2,
+          "paddingOuter": 0,
+          "data": ["当期值", "累计值"]
+        },
+        "y": {
+          "type": "value",
+          "max": 100,
+          "min": 0
+        }
+      },
+      "children": [
+        20, 60
+      ]
+    },
+    {
+      "type": "chart",
+      "coordinate": {
+        "type": "rect",
+        "x": {
+          "type": "category",
+          "paddingInner": 0.2,
+          "paddingOuter": 0,
+          "data": ["当期值", "累计值"]
+        },
+        "y": {
+          "type": "value",
+          "max": 100,
+          "min": 0
+        }
+      },
+      "children": [
+        80, 40
+      ]
+    },
+    {
+      "type": "chart",
+      "coordinate": {
+        "type": "rect",
+        "x": {
+          "type": "category",
+          "paddingInner": 0.2,
+          "paddingOuter": 0,
+          "data": ["当期值", "累计值"]
+        },
+        "y": {
+          "type": "value",
+          "max": 100,
+          "min": 0
+        }
+      },
+      "children": [
+        50, 70
+      ]
+    }
   ]
 }

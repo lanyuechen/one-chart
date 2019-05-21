@@ -134,7 +134,7 @@ class RectCoordinate extends CI {
 
   scale(d, range) {
     if (d.type === 'category') {
-      return this.scaleBand(d, range)
+      return this.scaleBand(d, range);
     } else if (d.type === 'value') {
       return this.scaleLinear(d, range);
     }

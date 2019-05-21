@@ -1,0 +1,19 @@
+{
+  "type": "chart",
+  "coordinate": {
+    "type": "rect",
+    "show": true,
+    "x": {
+      "type": "category",
+      "data": ["北京", "河北", "陕西"]
+    },
+    "y": {
+      "type": "value",
+      "max": 100,
+      "min": 0
+    }
+  },
+  "children": [
+    10, 20, 30
+  ]
+}
